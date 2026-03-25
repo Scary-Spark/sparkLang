@@ -29,7 +29,7 @@ jobs:
           
           # The remote path (must end with /)
           # Note: If your FTP user starts inside sparkLang, use ./
-          server-dir: /home/codeblue/sparkLang/
+          server-dir: ./
           
           # Optional: Use state-of-the-art FTPS if supported
           protocol: ftp
