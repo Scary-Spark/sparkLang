@@ -80,14 +80,30 @@ codeEditor.addEventListener("input", updateLineNumbers);
 
 updateLineNumbers();
 
-runBtn.addEventListener("click", () => {
+runBtn.addEventListener("click", async () => {
   const code = codeEditor.value.trim();
   if (!code) {
     output.innerHTML = '<div class="output-placeholder">Nothing to run!</div>';
     return;
   }
 
-  output.innerHTML = `<pre>${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
+  output.innerHTML = "Running...";
+
+  try {
+    const response = await fetch("/run", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code: code }),
+    });
+
+    const data = await response.json();
+
+    output.innerHTML = `<pre>${data.output}</pre>`;
+  } catch (err) {
+    output.innerHTML = `<pre style="color:red;">Server Error</pre>`;
+  }
 });
 
 resetBtn.addEventListener("click", () => {

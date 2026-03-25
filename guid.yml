@@ -1,0 +1,17 @@
+src:
+  controllers:
+  main:
+    main.js
+  publicS:
+    assets:
+      fonts:
+      icons:
+      images:
+    scripts:
+      home.js
+    styles:
+      home.css
+  routes:
+    homeRoutes.js
+  views:
+    home.js
