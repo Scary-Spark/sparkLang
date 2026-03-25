@@ -18,6 +18,5 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: src/publicS
+          local-dir: src/publicS/    # ✅ ends with /
           server-dir: /public_html/spark
-          git-ftp-args: --insecure
