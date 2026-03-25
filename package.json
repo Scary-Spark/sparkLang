@@ -1,0 +1,16 @@
+{
+  "name": "spark-language",
+  "version": "1.0.0",
+  "description": "a new languge build with javaScript",
+  "license": "AGPL-3.0",
+  "author": "Scary Spark",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "app": "nodemon src/main/main.js"
+  },
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1"
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spark Online Compiler</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/styles/home.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo-section">
+        <div class="logo">Spark</div>
+        <div class="compiler-title">Spark Online Compiler</div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="editor-section">
+        <div class="toolbar">
+          <div class="tabs-container">
+            <div class="file-tab active" data-tab="editor">
+              <i class="fas fa-file-code"></i>
+              <span>main.spark</span>
+            </div>
+
+            <div class="file-tab output-tab-mobile" data-tab="output">
+              <span>⚡Output</span>
+            </div>
+          </div>
+
+          <div class="toolbar-buttons">
+            <button class="btn btn-reset">⟳<span> Reset</span></button>
+            <button class="btn btn-run">▶<span> Run</span></button>
+          </div>
+        </div>
+
+        <div class="editor-container" >
+          <div class="line-numbers" id="lineNumbers">1</div>
+          <textarea
+            class="code-editor"
+            id="codeEditor"
+            spellcheck="false"
+            placeholder="// Write your code here"
+            id="editorSection"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="output-section">
+        <div class="output-header">
+          <div class="output-title">⚡Output</div>
+          <button class="btn" id="clearBtn">
+            <i class="fas fa-trash"></i>
+            <span>Clear</span>
+          </button>
+        </div>
+        <div class="output-content" id="output">
+          <div class="output-placeholder">
+            Click "Run" to see the output here...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/scripts/home.js"></script>
+  </body>
+</html>

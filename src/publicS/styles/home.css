@@ -1,0 +1,450 @@
+:root {
+  --dracula-bg: #282a36;
+  --dracula-current-line: #44475a;
+  --dracula-foreground: #f8f8f2;
+  --dracula-comment: #6272a4;
+  --dracula-cyan: #8be9fd;
+  --dracula-green: #50fa7b;
+  --dracula-orange: #ffb86c;
+  --dracula-pink: #ff79c6;
+  --dracula-purple: #bd93f9;
+  --dracula-red: #ff5555;
+  --dracula-yellow: #f1fa8c;
+  --dracula-selection: #44475a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--dracula-bg);
+  color: var(--dracula-foreground);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  background: var(--dracula-current-line);
+  padding: 15px 25px;
+  border-bottom: 1px solid #6272a4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(
+    135deg,
+    var(--dracula-purple) 0%,
+    var(--dracula-pink) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.compiler-title {
+  color: var(--dracula-comment);
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 70px);
+}
+
+.editor-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--dracula-current-line);
+}
+
+.toolbar {
+  background: var(--dracula-current-line);
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #6272a4;
+}
+
+.tabs-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.file-tab {
+  background: var(--dracula-bg);
+  padding: 8px 20px;
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;
+  color: var(--dracula-foreground);
+  border: 1px solid var(--dracula-current-line);
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-tab i {
+  color: var(--dracula-orange);
+}
+
+.output-tab-mobile {
+  display: none;
+}
+
+.toolbar-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: 1px solid var(--dracula-current-line);
+  background: var(--dracula-bg);
+  color: var(--dracula-foreground);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background: var(--dracula-current-line);
+  border-color: var(--dracula-purple);
+}
+
+.btn-run {
+  background: var(--dracula-green);
+  color: var(--dracula-bg);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-reset {
+  background: var(--dracula-red);
+  color: var(--dracula-bg);
+  border: none;
+  font-weight: 600;
+}
+
+.btn-run:hover {
+  background: #41d165;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(80, 250, 123, 0.3);
+}
+
+.btn-reset:hover {
+  background: #ff6e6e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 85, 85, 0.3);
+}
+
+.editor-container {
+  flex: 1;
+  display: flex;
+  background: var(--dracula-bg);
+  overflow: hidden;
+}
+
+.line-numbers {
+  background: var(--dracula-current-line);
+  padding: 15px 10px;
+  text-align: right;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dracula-comment);
+  user-select: none;
+  min-width: 50px;
+  border-right: 1px solid #6272a4;
+  white-space: pre;
+  overflow: hidden;
+}
+
+.code-editor {
+  flex: 1;
+  padding: 15px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--dracula-bg);
+  color: var(--dracula-foreground);
+  border: none;
+  outline: none;
+  resize: none;
+  tab-size: 4;
+  overflow: auto;
+  caret-color: var(--dracula-foreground);
+}
+
+.code-editor::placeholder {
+  color: var(--dracula-comment);
+  opacity: 1;
+}
+
+.code-editor:focus::placeholder {
+  opacity: 0.6;
+}
+
+.code-editor::selection,
+.line-numbers::selection {
+  background: var(--dracula-selection);
+  color: var(--dracula-foreground);
+}
+
+.output-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background: var(--dracula-current-line);
+  border-left: 1px solid #6272a4;
+}
+
+.output-header {
+  background: var(--dracula-bg);
+  padding: 10px 15px;
+  border-bottom: 1px solid #6272a4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.output-title {
+  font-size: 14px;
+  color: var(--dracula-foreground);
+  font-weight: 500;
+}
+
+.output-content {
+  flex: 1;
+  padding: 15px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  overflow-y: auto;
+  background: var(--dracula-bg);
+  color: var(--dracula-foreground);
+
+  line-height: 1.6;
+}
+
+.output-placeholder {
+  color: var(--dracula-comment);
+  font-style: italic;
+}
+
+/* Dracula Syntax Highlighting */
+.syntax-comment {
+  color: var(--dracula-comment);
+  font-style: italic;
+}
+.syntax-keyword {
+  color: var(--dracula-pink);
+  font-weight: 500;
+}
+.syntax-string {
+  color: var(--dracula-yellow);
+}
+.syntax-function {
+  color: var(--dracula-green);
+}
+.syntax-number {
+  color: var(--dracula-purple);
+}
+.syntax-operator {
+  color: var(--dracula-pink);
+}
+.syntax-variable {
+  color: var(--dracula-foreground);
+}
+.syntax-type {
+  color: var(--dracula-cyan);
+}
+
+@media (max-width: 768px) {
+  .tabs-container .file-tab {
+    border-radius: 5px;
+    border-bottom: 1px solid var(--dracula-current-line);
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .tabs-container .file-tab:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+  }
+
+  .tabs-container .file-tab:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 1px solid var(--dracula-current-line);
+  }
+
+  .tabs-container .file-tab:hover {
+    background: var(--dracula-current-line);
+    border-color: var(--dracula-purple);
+  }
+
+  .output-section {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .output-tab-mobile {
+    display: flex;
+  }
+
+  .toolbar-buttons .btn span {
+    display: none;
+  }
+
+  .toolbar-buttons .btn {
+    padding: 8px 12px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dracula-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dracula-current-line);
+  border-radius: 4px;
+  border: 2px solid var(--dracula-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dracula-comment);
+}
+
+.btn:focus,
+.code-editor:focus {
+  outline: 2px solid var(--dracula-purple);
+  outline-offset: 2px;
+}
+
+.btn,
+.file-tab,
+.output-content {
+  transition: all 0.2s ease;
+}
+
+::selection {
+  background: rgba(189, 147, 249, 0.4);
+  color: var(--dracula-foreground);
+  text-shadow: none;
+}
+
+.code-editor::selection {
+  background: var(--dracula-purple);
+  color: var(--dracula-bg);
+  font-weight: 500;
+}
+
+.output-content::selection {
+  background: rgba(80, 250, 123, 0.35);
+  color: var(--dracula-foreground);
+}
+
+.line-numbers::selection {
+  background: var(--dracula-comment);
+  color: var(--dracula-bg);
+}
+
+.btn::selection {
+  background: var(--dracula-pink);
+  color: var(--dracula-bg);
+}
+
+::-moz-selection {
+  background: rgba(189, 147, 249, 0.4);
+  color: var(--dracula-foreground);
+  text-shadow: none;
+}
+
+.code-editor::-moz-selection {
+  background: var(--dracula-purple);
+  color: var(--dracula-bg);
+  font-weight: 500;
+}
+
+.output-content::-moz-selection {
+  background: rgba(80, 250, 123, 0.35);
+  color: var(--dracula-foreground);
+}
+
+.line-numbers::-moz-selection {
+  background: var(--dracula-comment);
+  color: var(--dracula-bg);
+}
+
+.btn::-moz-selection {
+  background: var(--dracula-pink);
+  color: var(--dracula-bg);
+}
+
+.file-tab.active {
+  background: var(--dracula-purple);
+  border-color: var(--dracula-purple);
+  color: var(--dracula-bg);
+  font-weight: 600;
+  position: relative;
+}
+
+.file-tab.active i {
+  color: var(--dracula-bg);
+}
+
+@keyframes tabSwitch {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.file-tab.active {
+  animation: tabSwitch 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .editor-section.hidden-mobile,
+  .output-section.hidden-mobile {
+    display: none !important;
+  }
+
+  .container.mobile-view {
+    height: calc(100vh - 70px);
+  }
+}
