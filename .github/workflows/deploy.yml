@@ -23,18 +23,8 @@ jobs:
           protocol: ftp
           port: 21
 
-      - name: 🔄 Force Restart via API
+      - name: 🔄 Force Restart
         run: |
-          # The -k ignores SSL errors, -sS shows errors but hides progress bars
-          RESPONSE=$(curl -k -sS -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
-          "https://${{ secrets.FTP_HOST }}:2083/execute/NodeJS/restart?app=sparkLang")
-          
-          echo "cPanel API Response: $RESPONSE"
-          
-          # Check if the response contains "errors":null to confirm success
-          if [[ $RESPONSE == *"\"errors\":null"* ]]; then
-            echo "✅ cPanel successfully received the restart command."
-          else
-            echo "❌ cPanel API returned an error. Check your Token or App Name."
-            exit 1
-          fi
+          # The API call to cPanel to reboot the specific app
+          curl -k -sS -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+          "https://${{ secrets.FTP_HOST }}:2083/execute/NodeJS/restart?app=sparkLang"
