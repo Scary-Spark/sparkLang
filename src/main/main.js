@@ -5,7 +5,7 @@ import router from "../routes/homeRoutes.js";
 
 // creating server
 const app = express();
-const port = 3000; // server running on port 3000
+const port = process.env.PORT || 3000; // server running on port 3000
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
