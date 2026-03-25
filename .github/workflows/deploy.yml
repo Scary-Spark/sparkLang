@@ -24,8 +24,6 @@ jobs:
           port: 21
 
       - name: 🔄 Restart cPanel Node App
-        # We use 'curl' to call the cPanel API to force a restart
-        # Replace 'sparkLang' with your actual App Root folder name if it's different
         run: |
-          curl -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+          curl -k -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
           "https://${{ secrets.FTP_HOST }}:2083/execute/NodeJS/restart?app=sparkLang"
