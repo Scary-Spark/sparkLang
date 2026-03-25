@@ -15,22 +15,17 @@ jobs:
       - name: 🚀 Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          # Your FTP Server
-          server: ${{ secrets.FTP_HOST }} 
-          
-          # Your FTP Username
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
-          
-          # This should be stored in GitHub Secrets
           password: ${{ secrets.FTP_PASSWORD }}
-          
-          # The local folder in your repo to upload
           local-dir: ./
-          
-          # The remote path (must end with /)
-          # Note: If your FTP user starts inside sparkLang, use ./
           server-dir: ./
-          
-          # Optional: Use state-of-the-art FTPS if supported
           protocol: ftp
           port: 21
+
+      - name: 🔄 Restart cPanel Node App
+        # We use 'curl' to call the cPanel API to force a restart
+        # Replace 'sparkLang' with your actual App Root folder name if it's different
+        run: |
+          curl -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+          "https://${{ secrets.FTP_HOST }}:2083/execute/NodeJS/restart?app=sparkLang"
