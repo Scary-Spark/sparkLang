@@ -23,7 +23,8 @@ jobs:
           protocol: ftp
           port: 21
 
-      - name: 🔄 Restart cPanel Node App
+      - name: 🔄 Force Restart
         run: |
-          curl -k -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+          # The API call to cPanel to reboot the specific app
+          curl -k -sS -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
           "https://${{ secrets.FTP_HOST }}:2083/execute/NodeJS/restart?app=sparkLang"
