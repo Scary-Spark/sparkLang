@@ -85,6 +85,7 @@ export function lexer(code) {
     if (char === "/" && code[cursor + 1] === "*") {
       cursor += 2;
       let closed = false;
+
       while (cursor < code.length) {
         if (code[cursor] === "*" && code[cursor + 1] === "/") {
           cursor += 2;
@@ -94,6 +95,7 @@ export function lexer(code) {
         if (code[cursor] === "\n") line++;
         cursor++;
       }
+
       if (!closed) addError("Unterminated multi-line comment");
       continue;
     }
@@ -103,12 +105,14 @@ export function lexer(code) {
       let value = "";
       cursor++;
       let closed = false;
+
       while (cursor < code.length) {
         if (code[cursor] === '"') {
           closed = true;
           cursor++;
           break;
         }
+
         if (code[cursor] === "\n") {
           addError("Unterminated string");
           line++;
@@ -117,6 +121,7 @@ export function lexer(code) {
         value += code[cursor];
         cursor++;
       }
+
       if (closed) addToken("STRING", value);
       continue;
     }
@@ -125,6 +130,7 @@ export function lexer(code) {
     if (isDigit(char)) {
       let value = "";
       let dotCount = 0;
+
       while (
         cursor < code.length &&
         (isDigit(code[cursor]) || code[cursor] === ".")
@@ -133,6 +139,22 @@ export function lexer(code) {
         value += code[cursor];
         cursor++;
       }
+
+      if (cursor < code.length && isLetter(code[cursor])) {
+        let invalidValue = value;
+        while (
+          cursor < code.length &&
+          (isLetter(code[cursor]) || isDigit(code[cursor]))
+        ) {
+          invalidValue += code[cursor];
+          cursor++;
+        }
+        addError(
+          `Invalid identifier '${invalidValue}' (cannot start with a digit)`,
+        );
+        continue;
+      }
+
       if (dotCount > 1) addError("Invalid number format");
       else addToken("NUMBER", value);
       continue;
@@ -141,6 +163,7 @@ export function lexer(code) {
     // handle identifiers and keywords
     if (isLetter(char)) {
       let value = "";
+
       while (
         cursor < code.length &&
         (isLetter(code[cursor]) || isDigit(code[cursor]))
@@ -148,6 +171,7 @@ export function lexer(code) {
         value += code[cursor];
         cursor++;
       }
+
       if (reservedKeyWords.includes(value)) addToken("KEYWORD", value);
       else addToken("IDENTIFIER", value);
       continue;
@@ -156,6 +180,7 @@ export function lexer(code) {
     // handle two-character operators (==, !=, +=, etc.)
     if (cursor + 1 < code.length) {
       let twoChar = code.substring(cursor, cursor + 2);
+
       if (reservedOperator.includes(twoChar)) {
         addToken("OPERATOR", twoChar);
         cursor += 2;

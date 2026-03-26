@@ -1,0 +1,76 @@
+// Top-level program
+program         → statement* EOF ;
+
+// ------------------- Statements -------------------
+statement       → declaration ";" 
+                | assignment ";" 
+                | printStmt ";" 
+                | ifStmt 
+                | whileStmt 
+                | forStmt 
+                | functionDecl ";" 
+                | returnStmt ";" ;
+
+// Variable declaration
+declaration     → "input" IDENTIFIER 
+                | "const" IDENTIFIER "=" expression ;
+
+// Assignment
+assignment      → IDENTIFIER "=" expression
+                | IDENTIFIER "+=" expression
+                | IDENTIFIER "-=" expression
+                | IDENTIFIER "*=" expression
+                | IDENTIFIER "/=" expression
+                | IDENTIFIER "%=" expression
+                | IDENTIFIER "++"
+                | IDENTIFIER "--" ;
+
+// Print statements
+printStmt       → "print" STRING
+                | "printn" STRING;
+
+// Return statement
+returnStmt      → "return" expression? ;
+
+// If / Else statements
+ifStmt          → "if" "(" expression ")" block 
+                  ("elif" "(" expression ")" block)* 
+                  ("else" block)? ;
+
+// While loop
+whileStmt       → "while" "(" expression ")" block ;
+
+// For loop
+forStmt         → "for" "(" assignment ";" expression ";" assignment ")" block ;
+
+// Function declaration
+functionDecl    → "function" IDENTIFIER "(" paramList? ")" block ;
+
+// Parameter list
+paramList       → IDENTIFIER ("," IDENTIFIER)* ;
+
+// Block (scoped statements)
+block           → "{" statement* "}";
+
+// ------------------- Expressions -------------------
+expression      → equality ;
+
+equality        → comparison (("==" | "!=") comparison)* ;
+
+comparison      → term (("<" | "<=" | ">" | ">=") term)* ;
+
+term            → factor (("+" | "-") factor)* ;
+
+factor          → unary (("*" | "/" | "%") unary)* ;
+
+unary           → ("+" | "-" | "++" | "--")? primary ;
+
+primary         → NUMBER
+                | IDENTIFIER
+                | STRING
+                | BOOLEAN
+                | "(" expression ")"
+                ;
+
+// Boolean literals
+BOOLEAN         → "true" | "false" ;
