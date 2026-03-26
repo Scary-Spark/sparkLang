@@ -27,8 +27,10 @@ print "Values: ${a}, ${b}, ${c}";  // string, print keyword
 
 if (a == b) {            // relational operator ==
   print "Equal";
-} else if (a != b) {     // relational operator !=
+} elif (a != b) {     // relational operator !=
   print "Not equal";
+}else {
+  // do something
 }
 
 if (a <= 20) {           // relational operator <=
@@ -41,13 +43,10 @@ if (b >= 10) {           // relational operator >=
 
 while (a < 100) {        // relational operator <
   a += 1;                // operator +=
+  if (a==3) {break;}
 }
 
-for (i = 0; i < 10; i++) { // semicolon, for loop
-  printn "Looping";
-}
 
-trueVal = true;           // boolean true
-falseVal = false;         // boolean false
+input trueVal = true;           // boolean true
+input falseVal = false;         // boolean false
 
-unexpected$ = 5;          // invalid character $

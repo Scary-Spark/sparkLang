@@ -1,0 +1,44 @@
+input x = 0;
+input y = 10;
+const target = 5;
+
+// 1. Nested While + If/Else + Complex Expressions
+while (x < y) {
+    x++;
+    
+    // Nested Loop
+    while (y > target) {
+        y--;
+        if (y == 7) {
+            print "Targeting seven...";
+            continue;
+        }
+        break;
+    }
+
+    // Complex Expression (With Parenthesis)
+    if (x == (target * 2) / (y - 5)) {
+        print "Math matches!";
+    } else {
+        // Complex Expression (Without Parenthesis - Testing Precedence)
+        if (x > target + 1 * 2) {
+            print "Precedence test: x is large";
+        } else {
+            print "Precedence test: x is small";
+        }
+    }
+}
+
+// 2. Deeply Nested Jump Test
+while (x > 0) {
+    if (x == 5) {
+        if (y == 5) {
+            print "Deep break!";
+            break; 
+        }
+    }
+    x--;
+}
+
+print "Final x:";
+print x;
