@@ -14,8 +14,8 @@ const reservedKeyWords = [
   "return",
   "for",
   "while",
-  "true",
-  "false",
+  // "true",
+  // "false",
 ];
 
 const reservedSymbols = [";", ",", "(", ")", "{", "}", "[", "]"];
@@ -159,7 +159,7 @@ export function lexer(code) {
       continue;
     }
 
-    // handle identifiers and keywords
+    // handle identifiers, keywords and boolean
     if (isLetter(char)) {
       let value = "";
 
@@ -172,7 +172,10 @@ export function lexer(code) {
       }
 
       if (reservedKeyWords.includes(value)) addToken("KEYWORD", value);
+      else if (value === "true" || value === "false")
+        addToken("BOOLEAN", value);
       else addToken("IDENTIFIER", value);
+
       continue;
     }
 
