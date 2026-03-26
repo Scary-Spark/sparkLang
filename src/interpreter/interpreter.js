@@ -1,17 +1,23 @@
 import { lexer } from "./lexer.js";
-import { parser } from "./parser.js";
 
+const debuggingMode = true;
 export function runInterpreter(code) {
-  const tokens = lexer(code);
-  const ast = parser(tokens);
-
+  const { tokens, errors } = lexer(code);
   let output = "";
 
-  for (let i = 0; i < ast.length; i++) {
-    if (ast[i] === "print") {
-      output += ast[i + 1].replace(/"/g, "") + "\n";
-      i++;
-    }
+  if (debuggingMode) {
+    output += "============== Tokenization ==============\n";
+    tokens.forEach((t) => {
+      output += `<${t.type.toUpperCase()}, ${t.value}, line ${t.line}>\n`;
+    });
+  }
+
+  // Add errors if any
+  if (errors.length > 0) {
+    output += "\n============== Errors ==============\n";
+    errors.forEach((err) => {
+      output += err + "\n";
+    });
   }
 
   return output;

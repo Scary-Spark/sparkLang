@@ -50,25 +50,21 @@ let lastWidth = window.innerWidth;
 
 window.addEventListener("resize", () => {
   const currentWidth = window.innerWidth;
-
-  // If switched between mobile and desktop
   if (
     (lastWidth <= 768 && currentWidth > 768) ||
     (lastWidth > 768 && currentWidth <= 768)
   ) {
     location.reload();
   }
-
   lastWidth = currentWidth;
 });
+
 //============================
 
 function updateLineNumbers() {
   const lines = codeEditor.value.split("\n").length;
   let numbers = "";
-  for (let i = 1; i <= lines; i++) {
-    numbers += i + "\n";
-  }
+  for (let i = 1; i <= lines; i++) numbers += i + "\n";
   lineNumbers.textContent = numbers;
 }
 
@@ -80,27 +76,31 @@ codeEditor.addEventListener("input", updateLineNumbers);
 
 updateLineNumbers();
 
+// Escape HTML to safely display tokens
+function escapeHTML(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 runBtn.addEventListener("click", async () => {
   const code = codeEditor.value.trim();
   if (!code) {
-    output.innerHTML = '<div class="output-placeholder">Nothing to run!</div>';
+    output.textContent = "Nothing to run!";
     return;
   }
 
-  output.innerHTML = "Running...";
+  output.textContent = "Running...";
 
   try {
     const response = await fetch("/run", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ code: code }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
     });
 
     const data = await response.json();
 
-    output.innerHTML = `<pre>${data.output}</pre>`;
+    // Safely display output
+    output.innerHTML = `<pre>${escapeHTML(data.output)}</pre>`;
   } catch (err) {
     output.innerHTML = `<pre style="color:red;">Server Error</pre>`;
   }

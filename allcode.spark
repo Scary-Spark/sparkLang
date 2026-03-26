@@ -1,0 +1,53 @@
+// Single line comment
+/*
+  Multi-line comment
+  spanning several lines
+*/
+
+input a = 10;           // keyword + identifier + operator + number + symbol
+input b = 15.5;         // floating point number
+const c = a + b;        // const keyword, operator +
+
+d = c - 5;              // identifier assignment, operator -
+
+e = d * 2;              // operator *
+f = e / 3;              // operator /
+g = f % 2;              // operator %
+
+h++;                     // operator ++
+i--;                     // operator --
+
+j += 5;                  // operator +=
+k -= 3;                  // operator -=
+l *= 2;                  // operator *=
+m /= 4;                  // operator /=
+n %= 3;                  // operator %=
+
+print "Values: ${a}, ${b}, ${c}";  // string, print keyword
+
+if (a == b) {            // relational operator ==
+  print "Equal";
+} else if (a != b) {     // relational operator !=
+  print "Not equal";
+}
+
+if (a <= 20) {           // relational operator <=
+  print "Less or equal";
+}
+
+if (b >= 10) {           // relational operator >=
+  print "Greater or equal";
+}
+
+while (a < 100) {        // relational operator <
+  a += 1;                // operator +=
+}
+
+for (i = 0; i < 10; i++) { // semicolon, for loop
+  printn "Looping";
+}
+
+trueVal = true;           // boolean true
+falseVal = false;         // boolean false
+
+unexpected$ = 5;          // invalid character $
