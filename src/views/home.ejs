@@ -53,10 +53,21 @@
       <div class="output-section">
         <div class="output-header">
           <div class="output-title">⚡Output</div>
-          <button class="btn" id="clearBtn">
-            <i class="fas fa-trash"></i>
-            <span>Clear</span>
-          </button>
+          <div class="output-actions">
+            <button
+              id="debugToggle"
+              class="debug-btn"
+              data-state="off"
+              title="Toggle Debug Mode"
+            >
+              <i class="fas fa-bug"></i>
+              <span class="debug-text">OFF</span>
+            </button>
+            <button class="btn" id="clearBtn">
+              <i class="fas fa-trash"></i>
+              <span>Clear</span>
+            </button>
+          </div>
         </div>
         <div class="output-content" id="output">
           <div class="output-placeholder">

@@ -3,9 +3,7 @@ import { parse } from "./parser.js";
 import { analyze } from "./analyzer.js";
 import { evaluate } from "./evaluator.js";
 
-const debuggingMode = false;
-
-export function runInterpreter(code) {
+export function runInterpreter(code, debuggingMode = false) {
   let result = "";
 
   const { tokens, errors: lexErrors } = lexer(code);
@@ -33,7 +31,6 @@ export function runInterpreter(code) {
     }
   }
 
-  // merge errors from earlier phases
   const allErrors = [...lexErrors, ...parseErrors, ...semanticErrors];
   if (allErrors.length > 0) {
     result += "\n============== Errors ==============\n";
@@ -41,7 +38,6 @@ export function runInterpreter(code) {
     return result;
   }
 
-  // run evaluator if no errors
   const { output, errors: runtimeErrors } = evaluate(ast);
 
   result += "\n============== Execution Output ==============\n";

@@ -236,6 +236,90 @@ body {
   font-weight: 500;
 }
 
+/* ========== Output Actions Container (Right Aligned Buttons) ========== */
+.output-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ========== Debug Toggle Button ========== */
+.debug-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--dracula-bg);
+  border: 2px solid var(--dracula-current-line);
+  border-radius: 20px;
+  color: var(--dracula-comment);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  outline: none;
+  white-space: nowrap;
+}
+
+.debug-btn:hover {
+  border-color: var(--dracula-purple);
+  color: var(--dracula-foreground);
+}
+
+.debug-btn i {
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.debug-btn .debug-text {
+  min-width: 26px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ON State - Glowing Purple */
+.debug-btn[data-state="on"] {
+  background: var(--dracula-purple);
+  border-color: var(--dracula-purple);
+  color: var(--dracula-bg);
+  box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.25);
+}
+
+.debug-btn[data-state="on"]:hover {
+  background: #c8a5f9;
+  border-color: #c8a5f9;
+  box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.45);
+  transform: translateY(-1px);
+}
+
+.debug-btn[data-state="on"] i {
+  animation: bugPulse 2s infinite;
+}
+
+@keyframes bugPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.debug-btn:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+.debug-btn:focus-visible {
+  outline: 2px solid var(--dracula-cyan);
+  outline-offset: 2px;
+}
+
+/* ========== Output Content ========== */
 .output-content {
   flex: 1;
   padding: 15px;
@@ -250,6 +334,13 @@ body {
 .output-placeholder {
   color: var(--dracula-comment);
   font-style: italic;
+}
+
+/* Debug output visual enhancement */
+.output-content.debug-active pre {
+  background: rgba(189, 147, 249, 0.08);
+  border-left: 4px solid var(--dracula-purple);
+  padding: 12px 16px;
 }
 
 /* Dracula Syntax Highlighting */
@@ -308,11 +399,17 @@ body {
   .output-section {
     display: none;
   }
-}
 
-@media (max-width: 768px) {
-  .output-tab-mobile {
-    display: flex;
+  .output-actions {
+    gap: 8px;
+  }
+
+  .debug-btn {
+    padding: 7px 10px;
+  }
+
+  .debug-btn .debug-text {
+    display: none;
   }
 
   .toolbar-buttons .btn span {

@@ -117,3 +117,39 @@ clearBtn.addEventListener("click", () => {
   output.innerHTML =
     '<div class="output-placeholder">Click "Run" to see the output here...</div>';
 });
+
+// debug toggle button:
+const debugToggle = document.getElementById("debugToggle");
+
+debugToggle.addEventListener("click", () => {
+  const currentState = debugToggle.dataset.state;
+  const newState = currentState === "off" ? "on" : "off";
+  debugToggle.dataset.state = newState;
+  debugToggle.querySelector(".debug-text").textContent = newState.toUpperCase();
+});
+
+runBtn.addEventListener("click", async () => {
+  const code = codeEditor.value.trim();
+  if (!code) {
+    output.textContent = "Nothing to run!";
+    return;
+  }
+
+  output.textContent = "Running...";
+
+  try {
+    const response = await fetch("/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code,
+        debug: debugToggle.dataset.state === "on",
+      }),
+    });
+
+    const data = await response.json();
+    output.innerHTML = `<pre>${escapeHTML(data.output)}</pre>`;
+  } catch (err) {
+    output.innerHTML = `<pre style="color:red;">Server Error</pre>`;
+  }
+});
