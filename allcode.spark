@@ -43,6 +43,7 @@ if (b >= 10) {           // relational operator >=
 
 while (a < 100) {        // relational operator <
   a += 1;                // operator +=
+  a--;
   if (a==3) {break;}
 }
 

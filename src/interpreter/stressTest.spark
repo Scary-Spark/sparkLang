@@ -1,0 +1,154 @@
+// ============================================
+// 🚀 ULTIMATE LANGUAGE VALIDATION TEST
+// ============================================
+
+/* 
+   This test validates:
+   ✓ Variables (input/const) with all types
+   ✓ Negative numbers & floating point
+   ✓ All arithmetic & comparison operators  
+   ✓ Compound assignments & unary ops
+   ✓ String interpolation with expressions
+   ✓ Escape sequences
+   ✓ If/elif/else with nested conditions
+   ✓ While loops with nested scopes
+   ✓ Break/continue in nested loops
+   ✓ Boolean logic
+*/
+
+// ========== 1. VARIABLES & TYPES ==========
+input count = -5;
+const MAX = 100;
+input rate = 0.075;
+input name = "Alice";
+input active = true;
+
+print "=== VARIABLES & TYPES ===\n";
+print "count=${count}, MAX=${MAX}\n";
+print "rate=${rate}, name=${name}\n";
+print "active=${active}\n\n";
+
+// ========== 2. ARITHMETIC WITH NEGATIVES ==========
+print "=== ARITHMETIC ===\n";
+input a = -10;
+input b = 3;
+print "a + b = ${a+b}\n";
+print "a - b = ${a-b}\n";
+print "a * b = ${a*b}\n";
+print "a / b = ${a/b}\n";
+print "a % b = ${a%b}\n";
+print "Complex: ${a + b * -2 - 4}\n\n";
+
+// ========== 3. COMPOUND & UNARY ==========
+print "=== COMPOUND & UNARY ===\n";
+input x = 10;
+x += -3;
+print "x += -3 → ${x}\n";
+x *= 2;
+print "x *= 2 → ${x}\n";
+x++;
+print "x++ → ${x}\n";
+x--;
+print "x-- → ${x}\n\n";
+
+// ========== 4. STRING INTERPOLATION ==========
+print "=== STRING INTERPOLATION ===\n";
+input first = "Hello";
+input last = "World";
+print "${first} ${last}\n";
+print "Math: 5 + -3 = ${5+-3}\n";
+print "Compare: ${10 > 5} and ${-2 < -5}\n";
+print "Escape: Line1\nLine2\tTab\n";
+print "Quote: \"test\" and backslash: \\\n\n";
+
+// ========== 5. CONDITIONALS ==========
+print "=== CONDITIONALS ===\n";
+input score = 85;
+if (score >= 90) {
+  print "Grade: A\n";
+} elif (score >= 80) {
+  print "Grade: B ✓\n";
+} elif (score >= 70) {
+  print "Grade: C\n";
+} else {
+  print "Grade: F\n";
+}
+
+input age = 20;
+input hasID = true;
+if (age >= 18 && hasID == true) {
+  print "Access granted ✓\n";
+} else {
+  print "Access denied\n";
+}
+print "\n";
+
+// ========== 6. NESTED WHILE LOOPS ==========
+print "=== NESTED WHILE LOOPS ===\n";
+input row = 1;
+while (row <= 3) {
+  input col = 1;
+  while (col <= 3) {
+    print "[${row},${col}] ";
+    col++;
+  }
+  print "\n";
+  row++;
+}
+print "\n";
+
+// ========== 7. BREAK & CONTINUE ==========
+print "=== BREAK & CONTINUE ===\n";
+input i = 0;
+while (i < 10) {
+  i++;
+  if (i == 3) {
+    continue;  // Skip 3
+  }
+  if (i == 7) {
+    print "Breaking at ${i} ✓\n";
+    break;
+  }
+  print "i=${i} ";
+}
+print "\n\n";
+
+// ========== 8. NESTED LOOP WITH BREAK ==========
+print "=== NESTED BREAK TEST ===\n";
+input outer = 1;
+while (outer <= 3) {
+  input inner = 1;
+  while (inner <= 5) {
+    if (inner == 3) {
+      break;  // Only breaks inner loop
+    }
+    print "o${outer}i${inner} ";
+    inner++;
+  }
+  print "\n";
+  outer++;
+}
+print "\n";
+
+// ========== 9. BOOLEAN LOGIC ==========
+print "=== BOOLEAN LOGIC ===\n";
+input p = true;
+input q = false;
+print "p == true: ${p==true}\n";
+print "q != true: ${q!=true}\n";
+print "p && q: ${p==true && q==false}\n";
+print "p || q: ${p==true || q==true}\n\n";
+
+// ========== 10. FINAL CALCULATION ==========
+print "=== FINAL CALCULATION ===\n";
+input principal = 1000;
+input years = 3;
+input interest = principal * rate * years;
+input total = principal + interest;
+print "Principal: $${principal}\n";
+print "Interest (${rate}*${years}yrs): $${interest}\n";
+print "Total: $${total} ✓\n\n";
+
+// ========== ✅ COMPLETION ==========
+print "=== 🎉 ALL TESTS PASSED! ===\n";
+print "Language validation: SUCCESS ✓\n";

@@ -30,6 +30,20 @@ export function parse(tokens) {
   function parsePrimary() {
     let token = peek();
 
+    // handle unary minus: -4, -10.5, etc.
+    if (token?.type === "OPERATOR" && token.value === "-") {
+      const next = tokens[cursor + 1];
+      if (next?.type === "NUMBER") {
+        eat(); // consume '-'
+        const numToken = eat(); // consume number
+        return {
+          value: `-${numToken.value}`,
+          valueType: "NUMBER",
+        };
+      }
+    }
+
+    // Handle parenthesized expressions
     if (token?.type === "SYMBOL" && token.value === "(") {
       eat();
       let node = parseExpression();
@@ -43,6 +57,7 @@ export function parse(tokens) {
       return node;
     }
 
+    // Handle literals
     if (["NUMBER", "IDENTIFIER", "BOOLEAN", "STRING"].includes(token?.type)) {
       let val = eat();
       return { value: val.value, valueType: val.type };
@@ -121,8 +136,29 @@ export function parse(tokens) {
     return left;
   }
 
+  // logical operator: && and ||
+  function parseLogical() {
+    let left = parseComparison();
+
+    while (peek()?.type === "OPERATOR" && ["&&", "||"].includes(peek().value)) {
+      let operator = eat().value;
+      let right = parseComparison(); // parseComparison for correct precedence
+
+      left = {
+        type: "LogicalExpression",
+        left: left.type ? left : left.value,
+        leftType: left.type ? "EXPRESSION" : left.valueType,
+        operator,
+        right: right.type ? right : right.value,
+        rightType: right.type ? "EXPRESSION" : right.valueType,
+      };
+    }
+
+    return left;
+  }
+
   function parseExpression() {
-    return parseComparison();
+    return parseLogical();
   }
 
   // block statement : {}
@@ -264,7 +300,7 @@ export function parse(tokens) {
       };
     }
 
-    // assignment & upnary
+    // assignment & unary
     if (token.type === "IDENTIFIER") {
       const nameToken = eat();
       const next = peek();

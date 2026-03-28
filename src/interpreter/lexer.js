@@ -27,6 +27,8 @@ const reservedOperator = [
   ">=",
   "++",
   "--",
+  "&&",
+  "||",
   "+",
   "-",
   "*",
@@ -105,6 +107,7 @@ export function lexer(code) {
       cursor++;
       let closed = false;
 
+      // check closing quote
       while (cursor < code.length) {
         if (code[cursor] === '"') {
           closed = true;
@@ -112,13 +115,44 @@ export function lexer(code) {
           break;
         }
 
+        // check new line
         if (code[cursor] === "\n") {
           addError("Unterminated string");
           line++;
           break;
         }
-        value += code[cursor];
-        cursor++;
+
+        // handle escape sequences
+        if (code[cursor] === "\\" && cursor + 1 < code.length) {
+          cursor++; // Skip backslash
+          const escaped = code[cursor];
+
+          switch (escaped) {
+            case "n":
+              value += "\n";
+              break; // newline
+            case "t":
+              value += "\t";
+              break; // Tab
+            case "r":
+              value += "\r";
+              break; // carriage return
+            case '"':
+              value += '"';
+              break; // escaped quote
+            case "\\":
+              value += "\\";
+              break; // escaped backslash
+            default:
+              value += escaped;
+              break; // keep unknown escapes
+          }
+          cursor++;
+        } else {
+          // Regular character
+          value += code[cursor];
+          cursor++;
+        }
       }
 
       if (closed) addToken("STRING", value);

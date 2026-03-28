@@ -1,14 +1,16 @@
 import { lexer } from "./lexer.js";
 import { parse } from "./parser.js";
-import { evaluate } from "./evaluator.js"; // Import the new evaluator
+import { analyze } from "./analyzer.js";
+import { evaluate } from "./evaluator.js";
 
-const debuggingMode = true;
+const debuggingMode = false;
 
 export function runInterpreter(code) {
   let result = "";
 
   const { tokens, errors: lexErrors } = lexer(code);
   const { ast, errors: parseErrors } = parse(tokens);
+  const { errors: semanticErrors, tableSnapshots } = analyze(ast);
 
   if (debuggingMode) {
     result += "============== Tokenization ==============\n";
@@ -18,21 +20,37 @@ export function runInterpreter(code) {
     );
     result += "\n============== AST ==============\n";
     result += JSON.stringify(ast, null, 2) + "\n";
+
+    result += "\n============== Symbol Table History ==============\n";
+    if (tableSnapshots && tableSnapshots.length > 0) {
+      tableSnapshots.forEach((snap, index) => {
+        result += `Step ${index + 1}: [${snap.action}] ${snap.nodeName || ""}\n`;
+        result += JSON.stringify(snap.scopes, null, 2) + "\n";
+        result += "-----------------------------------\n";
+      });
+    } else {
+      result += "No symbols recorded.\n";
+    }
   }
 
-  // Check for Lexer or Parser errors
-  const allErrors = [...lexErrors, ...parseErrors];
+  // merge errors from earlier phases
+  const allErrors = [...lexErrors, ...parseErrors, ...semanticErrors];
   if (allErrors.length > 0) {
     result += "\n============== Errors ==============\n";
     allErrors.forEach((err) => (result += err + "\n"));
     return result;
   }
 
-  // 5. RUN THE EXECUTION
-  const executionOutput = evaluate(ast);
+  // run evaluator if no errors
+  const { output, errors: runtimeErrors } = evaluate(ast);
 
   result += "\n============== Execution Output ==============\n";
-  result += executionOutput;
+  result += output || "No output.\n";
+
+  if (runtimeErrors.length > 0) {
+    result += "\n============== Runtime Errors ==============\n";
+    runtimeErrors.forEach((err) => (result += err + "\n"));
+  }
 
   return result;
 }
