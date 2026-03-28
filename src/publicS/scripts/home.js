@@ -76,7 +76,6 @@ codeEditor.addEventListener("input", updateLineNumbers);
 
 updateLineNumbers();
 
-// Escape HTML to safely display tokens
 function escapeHTML(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
@@ -99,7 +98,6 @@ runBtn.addEventListener("click", async () => {
 
     const data = await response.json();
 
-    // Safely display output
     output.innerHTML = `<pre>${escapeHTML(data.output)}</pre>`;
   } catch (err) {
     output.innerHTML = `<pre style="color:red;">Server Error</pre>`;
@@ -152,4 +150,30 @@ runBtn.addEventListener("click", async () => {
   } catch (err) {
     output.innerHTML = `<pre style="color:red;">Server Error</pre>`;
   }
+});
+
+// import button
+const importBtn = document.getElementById("importBtn");
+const fileInput = document.getElementById("fileInput");
+
+importBtn.addEventListener("click", () => {
+  fileInput.click(); // open file picker
+});
+
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  // only allow .spark files
+  if (!file.name.endsWith(".spark")) {
+    alert("Please select a .spark file.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    codeEditor.value = e.target.result; // paste file contents into editor
+    updateLineNumbers();
+  };
+  reader.readAsText(file);
 });

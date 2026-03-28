@@ -33,6 +33,23 @@
           </div>
 
           <div class="toolbar-buttons">
+            <button
+              class="btn btn-import"
+              id="importBtn"
+              title="Import from your device"
+            >
+              <i class="fas fa-download"></i>
+              <span>Import</span>
+            </button>
+
+            <!-- hidden file input -->
+            <input
+              type="file"
+              id="fileInput"
+              accept=".spark"
+              style="display: none"
+            />
+
             <button class="btn btn-reset">⟳<span> Reset</span></button>
             <button class="btn btn-run">▶<span> Run</span></button>
           </div>
@@ -63,12 +80,14 @@
               <i class="fas fa-bug"></i>
               <span class="debug-text">OFF</span>
             </button>
+
             <button class="btn" id="clearBtn">
               <i class="fas fa-trash"></i>
               <span>Clear</span>
             </button>
           </div>
         </div>
+
         <div class="output-content" id="output">
           <div class="output-placeholder">
             Click "▶ Run" to see the output here...

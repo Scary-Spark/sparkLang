@@ -544,3 +544,258 @@ body {
     height: calc(100vh - 70px);
   }
 }
+
+/* =================================== */
+/* ========== Import Button Styles ========== */
+.btn-import {
+  background: var(--dracula-bg);
+  border: 1px solid var(--dracula-current-line);
+  color: var(--dracula-cyan);
+  font-weight: 500;
+  position: relative;
+}
+
+.btn-import i {
+  color: var(--dracula-cyan);
+  transition: all 0.2s ease;
+}
+
+.btn-import:hover {
+  background: var(--dracula-current-line);
+  border-color: var(--dracula-cyan);
+  color: var(--dracula-foreground);
+}
+
+.btn-import:hover i {
+  color: var(--dracula-purple);
+  transform: translateY(-2px);
+}
+
+/* Import Count Badge */
+.btn-import::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--dracula-purple);
+  color: var(--dracula-bg);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 8px;
+  min-width: 16px;
+  text-align: center;
+  border: 2px solid var(--dracula-bg);
+}
+
+.btn-import[data-count="0"]::after,
+.btn-import:not([data-count])::after {
+  display: none;
+}
+
+/* ========== import dropdown panel ========== */
+.import-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  margin-top: 8px;
+  background: var(--dracula-bg);
+  border: 1px solid var(--dracula-current-line);
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 250px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: none;
+}
+
+.import-dropdown.show {
+  display: block;
+  animation: dropdownSlide 0.2s ease;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.import-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--dracula-current-line);
+}
+
+.import-dropdown-header h4 {
+  color: var(--dracula-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.import-dropdown-header h4 i {
+  color: var(--dracula-cyan);
+}
+
+.import-dropdown-close {
+  background: transparent;
+  border: none;
+  color: var(--dracula-comment);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.import-dropdown-close:hover {
+  color: var(--dracula-red);
+}
+
+.import-list {
+  max-height: 180px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.import-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--dracula-current-line);
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition: all 0.2s ease;
+}
+
+.import-item:hover {
+  background: rgba(189, 147, 249, 0.15);
+  border-left: 3px solid var(--dracula-purple);
+  padding-left: 7px;
+}
+
+.import-item-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.import-item-info i {
+  color: var(--dracula-green);
+  font-size: 11px;
+}
+
+.import-item-name {
+  color: var(--dracula-foreground);
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 12px;
+}
+
+.btn-remove-import {
+  background: transparent;
+  border: 1px solid var(--dracula-current-line);
+  color: var(--dracula-comment);
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-remove-import:hover {
+  background: var(--dracula-red);
+  border-color: var(--dracula-red);
+  color: var(--dracula-bg);
+}
+
+.import-search-box {
+  margin-top: 8px;
+}
+
+.import-search-box input {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--dracula-current-line);
+  border: 1px solid var(--dracula-current-line);
+  border-radius: 5px;
+  color: var(--dracula-foreground);
+  font-size: 12px;
+  outline: none;
+}
+
+.import-search-box input:focus {
+  border-color: var(--dracula-purple);
+  box-shadow: 0 0 0 2px rgba(189, 147, 249, 0.2);
+}
+
+.import-search-box input::placeholder {
+  color: var(--dracula-comment);
+}
+
+.btn-add-import {
+  width: 100%;
+  margin-top: 8px;
+  background: var(--dracula-current-line);
+  color: var(--dracula-foreground);
+  border: 1px dashed var(--dracula-comment);
+  font-weight: 500;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+
+.btn-add-import:hover {
+  background: rgba(189, 147, 249, 0.15);
+  border-color: var(--dracula-purple);
+  color: var(--dracula-purple);
+}
+
+/* empty state */
+.import-empty {
+  text-align: center;
+  padding: 15px;
+  color: var(--dracula-comment);
+}
+
+.import-empty i {
+  font-size: 24px;
+  margin-bottom: 8px;
+  display: block;
+  opacity: 0.4;
+}
+
+.import-empty span {
+  font-size: 12px;
+}
+
+/* mobile responsive */
+@media (max-width: 768px) {
+  .btn-import span {
+    display: none;
+  }
+
+  .btn-import {
+    padding: 8px 12px;
+  }
+
+  .import-dropdown {
+    right: 5px;
+    min-width: 240px;
+  }
+}
