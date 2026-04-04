@@ -1,0 +1,14 @@
+guide.yml:
+  run_the_program:
+    - First, make sure to download the required Node.js modules by running:
+        npm install
+
+    - Option 1:
+        Open the terminal and execute:
+        npm run app
+
+    - Option 2:
+        - Go to the folder: src/main
+        - Then run one of the following commands in the terminal:
+            node main
+            nodemon main
